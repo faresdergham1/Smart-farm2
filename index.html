@@ -184,6 +184,14 @@
 
   <script>
     const backendURL = "https://bc9aba15-ae9e-48fc-a83f-6675ab5f5199-00-3uieuxvtmky2r.riker.replit.dev/";
+    fetch(backendURL + "api/sensors", {
+  method: "GET",
+  credentials: "include", // مهم لو في JWT أو أي جلسة
+})
+.then(res => res.json())
+.then(data => console.log(data))
+.catch(err => console.error("Error:", err));
+
 
     function toggleLang() {
       const btn = document.querySelector(".lang-toggle");
