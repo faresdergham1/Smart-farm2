@@ -183,63 +183,65 @@
   </section>
 
   <script>
-    const backendURL = "https://bc9aba15-ae9e-48fc-a83f-6675ab5f5199-00-3uieuxvtmky2r.riker.replit.dev/";
+  const backendURL = "https://bc9aba15-ae9e-48fc-a83f-6675ab5f5199-00-3uieuxvtmky2r.riker.replit.dev/"; // ✅ غيره لو اتغير
 
-    function toggleLang() {
-      const btn = document.querySelector(".lang-toggle");
-      currentLang = currentLang === 'en' ? 'ar' : 'en';
-      btn.textContent = currentLang === 'en' ? 'عربي' : 'English';
+  let currentLang = 'en';
 
-      const texts = {
-        en: ['Soil Moisture', 'Temperature', 'Humidity', 'Light Level'],
-        ar: ['رطوبة التربة', 'درجة الحرارة', 'الرطوبة', 'شدة الإضاءة']
-      };
+  // ✅ أول ما الصفحة تفتح، يحمل البيانات
+  fetch(`${backendURL}/api/sensors`)
+    .then(res => res.json())
+    .then(data => {
+      const cards = document.querySelectorAll(".card");
 
-      document.querySelectorAll(".card").forEach((card, i) => {
-        card.querySelector("h3").textContent = texts[currentLang][i];
-      });
+      // Soil Moisture
+      cards[0].querySelector(".progress").style.width = `${data.soil_moisture || 0}%`;
+      cards[0].querySelector(".value-label").textContent = `${data.soil_moisture || 0}%`;
 
-      const overlayText = {
-        en: { title: "AI Power for Smart Farming", subtitle: "IOT TITENS – Made in Egypt 🇪🇬" },
-        ar: { title: "الذكاء الاصطناعي للزراعة الذكية", subtitle: "أيوتي تيتنز – صنع في مصر 🇪🇬" }
-      };
+      // Temperature
+      cards[1].querySelector(".progress").style.width = `${data.temperature || 0}%`;
+      cards[1].querySelector(".value-label").textContent = `${data.temperature || 0}°C`;
 
-      document.querySelector(".overlay-text h1").textContent = overlayText[currentLang].title;
-      document.querySelector(".overlay-text p").textContent = overlayText[currentLang].subtitle;
-    }
+      // Humidity
+      cards[2].querySelector(".progress").style.width = `${data.humidity || 0}%`;
+      cards[2].querySelector(".value-label").textContent = `${data.humidity || 0}%`;
 
-    function toggleMode() {
-      const body = document.body;
-      const btn = document.querySelector(".mode-toggle");
-      const isLight = body.classList.toggle("light-mode");
-      btn.textContent = isLight ? '☀' : '🌙';
-    }
+      // Light Level
+      cards[3].querySelector(".progress").style.width = `${data.ldr || 0}%`;
+      cards[3].querySelector(".value-label").textContent = `${data.ldr || 0} Lux`;
+    })
+    .catch(error => {
+      console.error("Error fetching sensor data:", error);
+    });
 
-    // ✅ ربط الـ Dashboard بالباك اند
-    fetch(`${backendURL}/api/sensors`)
-      .then(res => res.json())
-      .then(data => {
-        const cards = document.querySelectorAll(".card");
+  function toggleLang() {
+    const btn = document.querySelector(".lang-toggle");
+    currentLang = currentLang === 'en' ? 'ar' : 'en';
+    btn.textContent = currentLang === 'en' ? 'عربي' : 'English';
 
-        // Soil Moisture
-        cards[0].querySelector(".progress").style.width = `${data.soil_moisture || 0}%`;
-        cards[0].querySelector(".value-label").textContent = `${data.soil_moisture || 0}%`;
+    const texts = {
+      en: ['Soil Moisture', 'Temperature', 'Humidity', 'Light Level'],
+      ar: ['رطوبة التربة', 'درجة الحرارة', 'الرطوبة', 'شدة الإضاءة']
+    };
 
-        // Temperature
-        cards[1].querySelector(".progress").style.width = `${data.temperature || 0}%`;
-        cards[1].querySelector(".value-label").textContent = `${data.temperature || 0}°C`;
+    document.querySelectorAll(".card").forEach((card, i) => {
+      card.querySelector("h3").textContent = texts[currentLang][i];
+    });
 
-        // Humidity
-        cards[2].querySelector(".progress").style.width = `${data.humidity || 0}%`;
-        cards[2].querySelector(".value-label").textContent = `${data.humidity || 0}%`;
+    const overlayText = {
+      en: { title: "AI Power for Smart Farming", subtitle: "IOT TITENS – Made in Egypt 🇪🇬" },
+      ar: { title: "الذكاء الاصطناعي للزراعة الذكية", subtitle: "أيوتي تيتنز – صنع في مصر 🇪🇬" }
+    };
 
-        // LDR (Light Level)
-        cards[3].querySelector(".progress").style.width = `${data.ldr || 0}%`;
-        cards[3].querySelector(".value-label").textContent = `${data.ldr || 0} Lux`;
-      })
-      .catch(error => {
-        console.error("Error fetching sensor data:", error);
-      });
-  </script>
+    document.querySelector(".overlay-text h1").textContent = overlayText[currentLang].title;
+    document.querySelector(".overlay-text p").textContent = overlayText[currentLang].subtitle;
+  }
+
+  function toggleMode() {
+    const body = document.body;
+    const btn = document.querySelector(".mode-toggle");
+    const isLight = body.classList.toggle("light-mode");
+    btn.textContent = isLight ? '☀' : '🌙';
+  }
+</script>
 </body>
 </html>
