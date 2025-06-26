@@ -185,31 +185,6 @@
   <script>
     const backendURL = "https://bc9aba15-ae9e-48fc-a83f-6675ab5f5199-00-3uieuxvtmky2r.riker.replit.dev/";
 
-fetch(backendURL + "api/sensors", {
-  method: "GET",
-  credentials: "include", // لو عندك JWT أو session
-})
-  .then((res) => {
-    if (!res.ok) throw new Error("Network response was not ok");
-    return res.json();
-  })
-  .then((data) => {
-    console.log("Sensor Data:", data);
-
-    // مثال: تعرض البيانات في الصفحة
-    document.getElementById("temperature").textContent = data.temperature + "°C";
-    document.getElementById("humidity").textContent = data.humidity + "%";
-    // ... باقي البيانات
-  })
-  .catch((err) => {
-    console.error("Fetch error:", err);
-
-})
-.then(res => res.json())
-.then(data => console.log(data))
-.catch(err => console.error("Error:", err));
-
-
     function toggleLang() {
       const btn = document.querySelector(".lang-toggle");
       currentLang = currentLang === 'en' ? 'ar' : 'en';
