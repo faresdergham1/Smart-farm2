@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* نفس التنسيقات اللي كتبتها */
     body {
       margin: 0;
       font-family: 'Cairo', sans-serif;
@@ -144,7 +143,7 @@
 <body>
   <header>
     <video autoplay loop muted playsinline>
-      <source src="your_intro_video.mp4" type="video/mp4">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <div class="overlay-text">
@@ -183,65 +182,60 @@
   </section>
 
   <script>
-  const backendURL = "https://bc9aba15-ae9e-48fc-a83f-6675ab5f5199-00-3uieuxvtmky2r.riker.replit.dev/"; // ✅ غيره لو اتغير
+    const backendURL = "https://bc9aba15-ae9e-48fc-a83f-6675ab5f5199-00-3uieuxvtmky2r.riker.replit.dev/"; // ✅ غيره حسب رابطك الفعلي
 
-  let currentLang = 'en';
+    let currentLang = 'en';
 
-  // ✅ أول ما الصفحة تفتح، يحمل البيانات
-  fetch(`${backendURL}/api/sensors`)
-    .then(res => res.json())
-    .then(data => {
-      const cards = document.querySelectorAll(".card");
+    fetch(`${backendURL}/api/sensors`)
+      .then(res => res.json())
+      .then(data => {
+        const cards = document.querySelectorAll(".card");
 
-      // Soil Moisture
-      cards[0].querySelector(".progress").style.width = `${data.soil_moisture || 0}%`;
-      cards[0].querySelector(".value-label").textContent = `${data.soil_moisture || 0}%`;
+        cards[0].querySelector(".progress").style.width = `${data.soil_moisture || 0}%`;
+        cards[0].querySelector(".value-label").textContent = `${data.soil_moisture || 0}%`;
 
-      // Temperature
-      cards[1].querySelector(".progress").style.width = `${data.temperature || 0}%`;
-      cards[1].querySelector(".value-label").textContent = `${data.temperature || 0}°C`;
+        cards[1].querySelector(".progress").style.width = `${data.temperature || 0}%`;
+        cards[1].querySelector(".value-label").textContent = `${data.temperature || 0}°C`;
 
-      // Humidity
-      cards[2].querySelector(".progress").style.width = `${data.humidity || 0}%`;
-      cards[2].querySelector(".value-label").textContent = `${data.humidity || 0}%`;
+        cards[2].querySelector(".progress").style.width = `${data.humidity || 0}%`;
+        cards[2].querySelector(".value-label").textContent = `${data.humidity || 0}%`;
 
-      // Light Level
-      cards[3].querySelector(".progress").style.width = `${data.ldr || 0}%`;
-      cards[3].querySelector(".value-label").textContent = `${data.ldr || 0} Lux`;
-    })
-    .catch(error => {
-      console.error("Error fetching sensor data:", error);
-    });
+        cards[3].querySelector(".progress").style.width = `${data.ldr || 0}%`;
+        cards[3].querySelector(".value-label").textContent = `${data.ldr || 0} Lux`;
+      })
+      .catch(error => {
+        console.error("Error fetching sensor data:", error);
+      });
 
-  function toggleLang() {
-    const btn = document.querySelector(".lang-toggle");
-    currentLang = currentLang === 'en' ? 'ar' : 'en';
-    btn.textContent = currentLang === 'en' ? 'عربي' : 'English';
+    function toggleLang() {
+      const btn = document.querySelector(".lang-toggle");
+      currentLang = currentLang === 'en' ? 'ar' : 'en';
+      btn.textContent = currentLang === 'en' ? 'عربي' : 'English';
 
-    const texts = {
-      en: ['Soil Moisture', 'Temperature', 'Humidity', 'Light Level'],
-      ar: ['رطوبة التربة', 'درجة الحرارة', 'الرطوبة', 'شدة الإضاءة']
-    };
+      const texts = {
+        en: ['Soil Moisture', 'Temperature', 'Humidity', 'Light Level'],
+        ar: ['رطوبة التربة', 'درجة الحرارة', 'الرطوبة', 'شدة الإضاءة']
+      };
 
-    document.querySelectorAll(".card").forEach((card, i) => {
-      card.querySelector("h3").textContent = texts[currentLang][i];
-    });
+      document.querySelectorAll(".card").forEach((card, i) => {
+        card.querySelector("h3").textContent = texts[currentLang][i];
+      });
 
-    const overlayText = {
-      en: { title: "AI Power for Smart Farming", subtitle: "IOT TITENS – Made in Egypt 🇪🇬" },
-      ar: { title: "الذكاء الاصطناعي للزراعة الذكية", subtitle: "أيوتي تيتنز – صنع في مصر 🇪🇬" }
-    };
+      const overlayText = {
+        en: { title: "AI Power for Smart Farming", subtitle: "IOT TITENS – Made in Egypt 🇪🇬" },
+        ar: { title: "الذكاء الاصطناعي للزراعة الذكية", subtitle: "أيوتي تيتنز – صنع في مصر 🇪🇬" }
+      };
 
-    document.querySelector(".overlay-text h1").textContent = overlayText[currentLang].title;
-    document.querySelector(".overlay-text p").textContent = overlayText[currentLang].subtitle;
-  }
+      document.querySelector(".overlay-text h1").textContent = overlayText[currentLang].title;
+      document.querySelector(".overlay-text p").textContent = overlayText[currentLang].subtitle;
+    }
 
-  function toggleMode() {
-    const body = document.body;
-    const btn = document.querySelector(".mode-toggle");
-    const isLight = body.classList.toggle("light-mode");
-    btn.textContent = isLight ? '☀' : '🌙';
-  }
-</script>
+    function toggleMode() {
+      const body = document.body;
+      const btn = document.querySelector(".mode-toggle");
+      const isLight = body.classList.toggle("light-mode");
+      btn.textContent = isLight ? '☀' : '🌙';
+    }
+  </script>
 </body>
 </html>
